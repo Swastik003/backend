@@ -16,7 +16,7 @@ import string
 from django.core.mail import send_mail
 
 
-class LoginAPIView(APIView):
+class Login(APIView):
 
     def post(self, request):
             username = request.data.get('username')
@@ -31,7 +31,7 @@ class LoginAPIView(APIView):
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class FileUploadView(APIView):
+class Upload(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
@@ -48,7 +48,7 @@ class FileUploadView(APIView):
         else:
              return Response({"error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class UserSignupView(APIView):
+class Signup(APIView):
     def post(self, request):
         serializer = UserSignupSerializer(data=request.data)
         if serializer.is_valid():
@@ -64,7 +64,7 @@ class UserSignupView(APIView):
         encrypted_url = cipher_suite.encrypt(url.encode()).decode()
         return encrypted_url
        
-class EmailVerificationView(APIView):
+class EmailVerification(APIView):
     def post(self, request):
         serializer = EmailVerificationSerializer(data=request.data)
         if serializer.is_valid():
@@ -85,7 +85,7 @@ class EmailVerificationView(APIView):
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email = [email]
         send_mail(subject, message, from_email, to_email) 
-class FileDownloadView(APIView):
+class Download(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
         member = request.user.person.get() 
@@ -109,7 +109,7 @@ class FileDownloadView(APIView):
         encrypted_url = cipher_suite.encrypt(url.encode()).decode()
         return encrypted_url    
       
-class FileListView(APIView):
+class FileList(APIView):
 
     def get(self, request):
         files = File.objects.all()
