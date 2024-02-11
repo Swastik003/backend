@@ -17,12 +17,7 @@ class FileSerializer(serializers.ModelSerializer):
         model = File
         fields = ['id', 'user', 'file', 'uploaded_at']
 
-from backend.models import AlterUser
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AlterUser
-        fields = ['id', 'username', 'email', 'is_ops_user']
 
 class EmailVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()        
